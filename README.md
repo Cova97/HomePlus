@@ -13,11 +13,6 @@ Este proyecto es una aplicación web diseñada para ofrecer servicios de calidad
 **APIs**: Consumo de APIs para integrar diversas funcionalidades externas y mejorar la experiencia del usuario.
 
 ## Instalación y Configuración
-Para ejecutar este proyecto en tu entorno local, sigue estos pasos:
-
----
-
-## Instalación y Configuración
 Para configurar y ejecutar este proyecto en tu entorno local, sigue estos pasos detallados:
 
 1. **Clona el repositorio**:
