@@ -12,28 +12,49 @@ Este proyecto es una aplicación web diseñada para ofrecer servicios de calidad
 ## Instalación y Configuración
 Para ejecutar este proyecto en tu entorno local, sigue estos pasos:
 
-1. Clona el repositorio en tu máquina local:
+Claro, aquí te proporciono una versión modificada de la sección de instalación y configuración del README basada en los pasos específicos que has proporcionado:
+
+---
+
+## Instalación y Configuración
+Para configurar y ejecutar este proyecto en tu entorno local, sigue estos pasos detallados:
+
+1. **Clona el repositorio**:
+   Abre una terminal y ejecuta el siguiente comando para clonar el repositorio:
    ```bash
    git clone URL_DEL_REPOSITORIO
-   cd NOMBRE_DEL_REPOSITORIO
    ```
 
-2. Instala las dependencias necesarias:
+2. **Instala Vite**:
+   En la terminal, navega al directorio donde deseas crear el proyecto y ejecuta:
    ```bash
    npm create vite@latest
    ```
+   Cuando se te solicite, responde `y` o `s` para confirmar que deseas proceder.
 
-3. Configura las variables de entorno necesarias:
-   - Crea un archivo `.env` en la raíz del proyecto y añade las siguientes variables:
-     ```
-     REACT_APP_API_KEY=your_api_key
-     REACT_APP_AUTH_DOMAIN=your_auth_domain
-     ```
+3. **Configura tu proyecto**:
+   - **Nombre del proyecto**: Introduce el nombre deseado para tu proyecto cuando se te solicite.
+   - **Nombre de los paquetes**: Configura el nombre del paquete como se indica.
+   - **Framework**: Elige `react` de las opciones disponibles para el framework.
+   - **Variante**: Selecciona `javascript` como la variante a usar.
 
-4. Ejecuta el proyecto:
+4. **Instala las dependencias**:
+   Una vez configurado el proyecto, cambia al directorio del mismo:
+   ```bash
+   cd NOMBRE_DEL_PROYECTO
+   ```
+   Ejecuta el siguiente comando para instalar las dependencias necesarias:
+   ```bash
+   npm install
+   ```
+
+5. **Ejecución local**:
+   Para correr el proyecto localmente, utiliza el siguiente comando:
    ```bash
    npm run dev
    ```
+
+Siguiendo estos pasos, podrás configurar y ejecutar el proyecto en tu máquina local. Asegúrate de reemplazar `URL_DEL_REPOSITORIO` y `NOMBRE_DEL_PROYECTO` con los valores adecuados para tu proyecto.
 
 ## Uso
 Para ver la aplicación en acción, puedes ejecutarla localmente con el comando `npm run dev` o visitar la versión desplegada en **Vercel** en la siguiente URL: `https://your-vercel-deployed-app-link.com`.
