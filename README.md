@@ -5,8 +5,11 @@ Este proyecto es una aplicación web diseñada para ofrecer servicios de calidad
 
 ## Tecnologías Utilizadas
 **Frontend**: La interfaz de usuario está construida con **Vite** y **React**, proporcionando una experiencia de usuario fluida y reactiva.
+
 **Backend**: La autenticación y gestión de los servicios disponibles se maneja a través de **Firebase**, que ofrece una solución robusta y escalable para el manejo de datos en tiempo real.
+
 **Despliegue**: El proyecto está desplegado en **Vercel**, facilitando un acceso rápido y seguro a la aplicación.
+
 **APIs**: Consumo de APIs para integrar diversas funcionalidades externas y mejorar la experiencia del usuario.
 
 ## Instalación y Configuración
