@@ -50,8 +50,6 @@ Para configurar y ejecutar este proyecto en tu entorno local, sigue estos pasos 
    npm run dev
    ```
 
-Siguiendo estos pasos, podrás configurar y ejecutar el proyecto en tu máquina local. Asegúrate de reemplazar `URL_DEL_REPOSITORIO` y `NOMBRE_DEL_PROYECTO` con los valores adecuados para tu proyecto.
-
 ## Uso
 Para ver la aplicación en acción, puedes ejecutarla localmente con el comando `npm run dev` o visitar la versión desplegada en **Vercel** en la siguiente URL: `https://your-vercel-deployed-app-link.com`.
 
