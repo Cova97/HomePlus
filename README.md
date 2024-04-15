@@ -15,8 +15,6 @@ Este proyecto es una aplicación web diseñada para ofrecer servicios de calidad
 ## Instalación y Configuración
 Para ejecutar este proyecto en tu entorno local, sigue estos pasos:
 
-Claro, aquí te proporciono una versión modificada de la sección de instalación y configuración del README basada en los pasos específicos que has proporcionado:
-
 ---
 
 ## Instalación y Configuración
