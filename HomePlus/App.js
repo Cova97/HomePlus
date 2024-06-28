@@ -1,35 +1,35 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import ServiceRequestScreen from './components/ServiceRequestScreen';
-import ChangePasswordScreen from './components/ChangePasswordScreen';
-import PaymentMethodsScreen from './components/PaymentMethodsScreen';
-import ServiceHistoryScreen from './components/ServiceHistoryScreen';
+// App.js
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import LoginScreen from './components/LoginScreen';
+import RegisterScreen from './components/RegisterScreen';
+import ServicesScreen from './components/ServicesScreen';
+import ScheduleScreen from './components/ScheduleScreen';
+import AppointmentScreen from './components/AppointmentScreen';
+import ConfirmationScreen from './components/ConfirmationScreen';
+import CompletionScreen from './components/CompletionScreen';
+import RatingScreen from './components/RatingScreen';
+import ThankYouScreen from './components/ThankYouScreen';
 
-export default function App() {
+const Stack = createStackNavigator();
+
+const App = () => {
   return (
-    <View style={styles.container}>
-      
-      {/* llamar Service */}
-      <ServiceRequestScreen />
-        
-        {/* llamar ChangePassword */}
-      {/* <ChangePasswordScreen /> */}
-        
-        {/* llamar PaymentMethods */}
-      {/* <PaymentMethodsScreen /> */}
-        
-        {/* llamar ServiceHistory */}
-      {/* <ServiceHistoryScreen /> */}
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Login">
+        <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Services" component={ServicesScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Schedule" component={ScheduleScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Appointment" component={AppointmentScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Confirmation" component={ConfirmationScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Completion" component={CompletionScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Rating" component={RatingScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="ThankYou" component={ThankYouScreen} options={{ headerShown: false }} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
