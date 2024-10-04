@@ -14,6 +14,9 @@ import RatingScreen from './components/RatingScreen';
 import ThankYouScreen from './components/ThankYouScreen';
 import UserInfoScreen from './components/UserInfoScreen';
 import PaymentMethodsScreen from './components/PaymentMethodsScreen';
+import ServiceHistoryScreen from './components/ServiceHistoryScreen';
+import HelpScreen from './components/HelpScreen';
+import MoreHelpScreen from './components/MoreHelpScreen';
 
 const Stack = createStackNavigator();
 
@@ -34,6 +37,9 @@ const App = () => {
             <Stack.Screen name="ThankYou" component={ThankYouScreen} options={{ headerShown: false }} />
             <Stack.Screen name="UserInfo" component={UserInfoScreen} />
             <Stack.Screen name="PaymentMethods" component={PaymentMethodsScreen} />
+            <Stack.Screen name="ServiceHistory" component={ServiceHistoryScreen} />
+            <Stack.Screen name="Help" component={HelpScreen} />
+            <Stack.Screen name="MoreHelp" component={MoreHelpScreen} />
           </Stack.Navigator>
         </View>
       </NavigationContainer>

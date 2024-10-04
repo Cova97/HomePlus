@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/Ionicons'; // Importamos los íconos
 import NavBar from './NavBar'; // Importamos el NavBar
 
-// Lista de servicios disponibles
+// Lista de servicios disponibles con íconos añadidos
 const services = [
-  { name: 'Plomero' },
-  { name: 'Electricista' },
-  { name: 'Jardinero' },
-  { name: 'Cerrajero' },
-  { name: 'Carpintero' },
-  { name: 'Mecánico' },
+  { name: 'Plomero', icon: 'water-outline' },
+  { name: 'Electricista', icon: 'flash-outline' },
+  { name: 'Jardinero', icon: 'leaf-outline' },
+  { name: 'Cerrajero', icon: 'lock-closed-outline' },
+  { name: 'Carpintero', icon: 'construct-outline' },
+  { name: 'Mecánico', icon: 'cog-outline' },
 ];
 
 const ServicesScreen = () => {
@@ -46,6 +47,8 @@ const ServicesScreen = () => {
               selectedService === service && styles.selectedServiceItem // Aplica un estilo diferente si está seleccionado
             ]} 
             onPress={() => handleServiceSelection(service)}>
+            {/* Añadimos el ícono antes del nombre del servicio */}
+            <Icon name={service.icon} size={30} color="#3E3E3E" />
             <Text style={[
               styles.serviceName, 
               selectedService === service && styles.selectedServiceName // Cambia el color del texto si está seleccionado

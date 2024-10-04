@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "HomePlus",
-    "slug": "HomePlus",
+    "slug": "homeplus",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -12,16 +12,24 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.cova97.homeplus"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.cova97.homeplus"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "da3bd07a-07a0-42ac-8ae2-bdc82751c2b9"
+      }
+    },
+    "owner": "cova97"
   }
 }
