@@ -1,4 +1,3 @@
-// screens/AppointmentScreen.js
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, TextInput, Platform } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -8,7 +7,7 @@ const AppointmentScreen = () => {
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
-  const [time, setTime] = useState('8:00');
+  const [time, setTime] = useState('8:00'); // Aquí se guarda la hora seleccionada
   const [address, setAddress] = useState('');
   const [description, setDescription] = useState('');
   const navigation = useNavigation();
@@ -60,8 +59,20 @@ const AppointmentScreen = () => {
         <Text style={styles.label}>Hora</Text>
         <View style={styles.timeOptions}>
           {['8:00', '9:00', '10:00', '11:00', '12:00', '13:00'].map((item, index) => (
-            <TouchableOpacity key={index} style={styles.timeOption} onPress={() => setTime(item)}>
-              <Text style={styles.timeText}>{item}</Text>
+            <TouchableOpacity 
+              key={index} 
+              style={[
+                styles.timeOption, 
+                time === item && styles.selectedTimeOption // Aplica el estilo resaltado si la hora está seleccionada
+              ]} 
+              onPress={() => setTime(item)}
+            >
+              <Text style={[
+                styles.timeText, 
+                time === item && styles.selectedTimeText // Cambia el color del texto si la hora está seleccionada
+              ]}>
+                {item}
+              </Text>
             </TouchableOpacity>
           ))}
         </View>
@@ -132,9 +143,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 10,
     borderRadius: 5,
+    borderWidth: 1,
+    borderColor: '#ccc',
+  },
+  selectedTimeOption: {
+    backgroundColor: '#4FC3F7', // Resalta la opción seleccionada con un fondo azul claro
+    borderColor: '#333', // Cambia el borde para la opción seleccionada
   },
   timeText: {
     color: '#3E3E3E',
+  },
+  selectedTimeText: {
+    color: '#fff', // Cambia el color del texto cuando está seleccionado
   },
   input: {
     width: '100%',

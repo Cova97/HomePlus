@@ -1,44 +1,82 @@
-// screens/RatingScreen.js
+// screens/RegisterScreen.js
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, TextInput, Image } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons'; // Asegúrate de tener instalado expo/vector-icons
 
-const RatingScreen = () => {
+const RegisterScreen = () => {
   const navigation = useNavigation();
-  const [rating, setRating] = useState(0);
-  const [comment, setComment] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleRating = (newRating) => {
-    setRating(newRating);
-  };
+  const handleRegister = () => {
+    if (password !== confirmPassword) {
+      setError('Las contraseñas no coinciden');
+      return;
+    }
 
-  const handleSubmit = () => {
-    // Aquí puedes agregar la lógica para enviar la calificación y comentarios
-    alert(`Calificación: ${rating} estrellas\nComentario: ${comment}`);
-    navigation.navigate('ThankYou'); // Navegar a la pantalla de agradecimiento
+    setError('');
+    // Aquí implementarías la lógica de registro
+    navigation.navigate('Services');
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Califica tu servicio</Text>
-      {/* <Image source={require('../assets/user.png')} style={styles.userIcon} /> */}
-      <Text style={styles.userName}>Juan Pérez</Text>
-      <View style={styles.ratingContainer}>
-        {[1, 2, 3, 4, 5].map((star) => (
-          <TouchableOpacity key={star} onPress={() => handleRating(star)}>
-            <Text style={styles.star}>{star <= rating ? '★' : '☆'}</Text>
-          </TouchableOpacity>
-        ))}
-      </View>
+      <Text style={styles.title}>Registro</Text>
       <TextInput
         style={styles.input}
-        placeholder="COMENTARIOS:"
-        value={comment}
-        onChangeText={setComment}
-        multiline
+        placeholder="Usuario"
+        value={username}
+        onChangeText={setUsername}
       />
-      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-        <Text style={styles.buttonText}>Finalizar</Text>
+      <View style={styles.passwordContainer}>
+        <TextInput
+          style={styles.passwordInput}
+          placeholder="Contraseña"
+          secureTextEntry={!showPassword}
+          value={password}
+          onChangeText={setPassword}
+        />
+        <TouchableOpacity
+          style={styles.eyeIcon}
+          onPress={() => setShowPassword(!showPassword)}
+        >
+          <Ionicons 
+            name={showPassword ? 'eye-off' : 'eye'} 
+            size={24} 
+            color="#3E3E3E"
+          />
+        </TouchableOpacity>
+      </View>
+      <View style={styles.passwordContainer}>
+        <TextInput
+          style={styles.passwordInput}
+          placeholder="Confirmar Contraseña"
+          secureTextEntry={!showConfirmPassword}
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
+        />
+        <TouchableOpacity
+          style={styles.eyeIcon}
+          onPress={() => setShowConfirmPassword(!showConfirmPassword)}
+        >
+          <Ionicons 
+            name={showConfirmPassword ? 'eye-off' : 'eye'} 
+            size={24} 
+            color="#3E3E3E"
+          />
+        </TouchableOpacity>
+      </View>
+      {error ? <Text style={styles.errorText}>{error}</Text> : null}
+      <TouchableOpacity style={styles.button} onPress={handleRegister}>
+        <Text style={styles.buttonText}>Registrarse</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+        <Text style={styles.backButtonText}>Volver al Login</Text>
       </TouchableOpacity>
     </View>
   );
@@ -55,29 +93,8 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 20,
+    marginBottom: 40,
     color: '#3E3E3E',
-  },
-  userIcon: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    marginBottom: 10,
-  },
-  userName: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#3E3E3E',
-    marginBottom: 20,
-  },
-  ratingContainer: {
-    flexDirection: 'row',
-    marginBottom: 20,
-  },
-  star: {
-    fontSize: 30,
-    marginHorizontal: 5,
-    color: '#FFD700',
   },
   input: {
     width: '100%',
@@ -88,18 +105,46 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ccc',
   },
+  passwordContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%',
+    backgroundColor: '#fff',
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    marginVertical: 10,
+  },
+  passwordInput: {
+    flex: 1,
+    padding: 10,
+  },
+  eyeIcon: {
+    padding: 10,
+  },
   button: {
     backgroundColor: '#fff',
     padding: 15,
     borderRadius: 5,
     width: '100%',
     alignItems: 'center',
-    marginTop: 20,
+    marginVertical: 10,
   },
   buttonText: {
     color: '#3E3E3E',
     fontSize: 16,
   },
+  errorText: {
+    color: 'red',
+    marginBottom: 10,
+  },
+  backButton: {
+    marginTop: 10,
+  },
+  backButtonText: {
+    color: '#3E3E3E',
+    fontSize: 14,
+  },
 });
 
-export default RatingScreen;
+export default RegisterScreen;
