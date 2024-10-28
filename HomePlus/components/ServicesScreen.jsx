@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/Ionicons'; // Importamos los íconos
-import NavBar from './NavBar'; // Importamos el NavBar
+import Icon from 'react-native-vector-icons/Ionicons';
+import NavBar from './NavBar';
 
-// Lista de servicios disponibles con íconos añadidos
 const services = [
   { name: 'Plomero', icon: 'water-outline' },
   { name: 'Electricista', icon: 'flash-outline' },
@@ -16,64 +15,65 @@ const services = [
 
 const ServicesScreen = () => {
   const navigation = useNavigation();
-  const [selectedService, setSelectedService] = useState(null); // Estado para el servicio seleccionado
+  const [selectedService, setSelectedService] = useState(null);
 
-  // Maneja la selección de un servicio
   const handleServiceSelection = (service) => {
-    setSelectedService(service); // Guarda el servicio seleccionado
+    setSelectedService(service);
   };
 
-  // Navega a AppointmentScreen solo si hay un servicio seleccionado
   const handleServiceRequest = () => {
     if (selectedService) {
-      navigation.navigate('Appointment', { service: selectedService.name }); // Pasa el servicio seleccionado a la pantalla de Appointment
+      navigation.navigate('Appointment', { service: selectedService.name });
     } else {
-      alert('Por favor selecciona un servicio antes de continuar.'); // Alerta si no se ha seleccionado un servicio
+      alert('Por favor selecciona un servicio antes de continuar.');
     }
   };
 
   return (
-    <View style={styles.container}>
-      {/* Título de la pantalla */}
-      <Text style={styles.title}>¿Qué servicio necesitas?</Text>
-
-      {/* Contenedor que mapea y muestra los servicios */}
-      <View style={styles.servicesContainer}>
-        {services.map((service, index) => (
-          <TouchableOpacity 
-            key={index} 
-            style={[
-              styles.serviceItem, 
-              selectedService === service && styles.selectedServiceItem // Aplica un estilo diferente si está seleccionado
-            ]} 
-            onPress={() => handleServiceSelection(service)}>
-            {/* Añadimos el ícono antes del nombre del servicio */}
-            <Icon name={service.icon} size={30} color="#3E3E3E" />
-            <Text style={[
-              styles.serviceName, 
-              selectedService === service && styles.selectedServiceName // Cambia el color del texto si está seleccionado
-            ]}>
-              {service.name}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-
-      {/* Botón para pedir servicio */}
-      <TouchableOpacity style={styles.button} onPress={handleServiceRequest}>
-        <Text style={styles.buttonText}>Pedir servicio</Text>
-      </TouchableOpacity>
-
-      {/* El NavBar solo se muestra en esta pantalla */}
+    <SafeAreaView style={styles.safeArea}>
       <NavBar />
-    </View>
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+        <View style={styles.container}>
+          <Text style={styles.title}>¿Qué servicio necesitas?</Text>
+          <View style={styles.servicesContainer}>
+            {services.map((service, index) => (
+              <TouchableOpacity 
+                key={index} 
+                style={[
+                  styles.serviceItem, 
+                  selectedService === service && styles.selectedServiceItem
+                ]} 
+                onPress={() => handleServiceSelection(service)}>
+                <Icon name={service.icon} size={30} color={selectedService === service ? '#fff' : '#3E3E3E'} />
+                <Text style={[
+                  styles.serviceName, 
+                  selectedService === service && styles.selectedServiceName
+                ]}>
+                  {service.name}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+          <TouchableOpacity style={styles.button} onPress={handleServiceRequest}>
+            <Text style={styles.buttonText}>Pedir servicio</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#B3E5FC',
+  },
+  scrollViewContent: {
+    flexGrow: 1,
+    paddingTop: 60, // Adjust this value based on your NavBar height
+  },
   container: {
     flex: 1,
-    backgroundColor: '#B3E5FC', // Fondo azul claro
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
@@ -82,44 +82,47 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
-    color: '#3E3E3E', // Color oscuro para el título
+    color: '#3E3E3E',
   },
   servicesContainer: {
     flexDirection: 'row',
-    flexWrap: 'wrap', // Organiza los servicios en filas
+    flexWrap: 'wrap',
     justifyContent: 'space-around',
     width: '100%',
   },
   serviceItem: {
     alignItems: 'center',
     margin: 10,
-    padding: 10,
-    backgroundColor: '#fff', // Fondo blanco para cada servicio
-    borderRadius: 5,
-    elevation: 2, // Sombra leve para dar sensación de profundidad
+    padding: 15,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    elevation: 3,
+    width: '40%',
   },
   selectedServiceItem: {
-    backgroundColor: '#81D4FA', // Fondo diferente para el servicio seleccionado
+    backgroundColor: '#81D4FA',
   },
   serviceName: {
     fontSize: 16,
-    color: '#3E3E3E', // Texto oscuro
+    color: '#3E3E3E',
+    marginTop: 5,
   },
   selectedServiceName: {
-    color: '#fff', // Texto blanco para el servicio seleccionado
+    color: '#fff',
   },
   button: {
-    backgroundColor: '#fff', // Fondo blanco para el botón
+    backgroundColor: '#4CAF50',
     padding: 15,
     borderRadius: 5,
     width: '100%',
     alignItems: 'center',
     marginTop: 20,
-    elevation: 2, // Sombra para el botón
+    elevation: 2,
   },
   buttonText: {
-    color: '#3E3E3E',
-    fontSize: 16,
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
 

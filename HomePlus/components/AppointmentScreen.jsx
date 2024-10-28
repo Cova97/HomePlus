@@ -1,5 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, TextInput, Platform } from 'react-native';
+import { 
+  View, 
+  Text, 
+  TouchableOpacity, 
+  StyleSheet, 
+  TextInput, 
+  Platform, 
+  Keyboard, 
+  TouchableWithoutFeedback 
+} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useNavigation } from '@react-navigation/native';
 
@@ -32,71 +41,73 @@ const AppointmentScreen = () => {
   };
 
   const handleSubmit = () => {
-    // Aquí puedes agregar la lógica para manejar la cita
     navigation.navigate('Confirmation', { date, time, address });
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Agenda tu cita</Text>
-      
-      <TouchableOpacity onPress={showDatepicker} style={styles.datePicker}>
-        <Text style={styles.dateText}>{date.toLocaleDateString()}</Text>
-      </TouchableOpacity>
-      
-      {show && (
-        <DateTimePicker
-          testID="dateTimePicker"
-          value={date}
-          mode={mode}
-          is24Hour={true}
-          display="default"
-          onChange={onChange}
-        />
-      )}
-      
-      <View style={styles.timeContainer}>
-        <Text style={styles.label}>Hora</Text>
-        <View style={styles.timeOptions}>
-          {['8:00', '9:00', '10:00', '11:00', '12:00', '13:00'].map((item, index) => (
-            <TouchableOpacity 
-              key={index} 
-              style={[
-                styles.timeOption, 
-                time === item && styles.selectedTimeOption // Aplica el estilo resaltado si la hora está seleccionada
-              ]} 
-              onPress={() => setTime(item)}
-            >
-              <Text style={[
-                styles.timeText, 
-                time === item && styles.selectedTimeText // Cambia el color del texto si la hora está seleccionada
-              ]}>
-                {item}
-              </Text>
-            </TouchableOpacity>
-          ))}
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Agenda tu cita</Text>
+        
+        <TouchableOpacity onPress={showDatepicker} style={styles.datePicker}>
+          <Text style={styles.dateText}>{date.toLocaleDateString()}</Text>
+        </TouchableOpacity>
+
+        {show && (
+          <DateTimePicker
+            testID="dateTimePicker"
+            value={date}
+            mode={mode}
+            is24Hour={true}
+            display="default"
+            onChange={onChange}
+          />
+        )}
+
+        <View style={styles.timeContainer}>
+          <Text style={styles.label}>Hora</Text>
+          <View style={styles.timeOptions}>
+            {['8:00', '9:00', '10:00', '11:00', '12:00', '13:00'].map((item, index) => (
+              <TouchableOpacity 
+                key={index} 
+                style={[
+                  styles.timeOption, 
+                  time === item && styles.selectedTimeOption
+                ]} 
+                onPress={() => setTime(item)}
+              >
+                <Text style={[
+                  styles.timeText, 
+                  time === item && styles.selectedTimeText
+                ]}>
+                  {item}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
         </View>
+
+        <TextInput
+          style={styles.input}
+          placeholder="Dirección"
+          value={address}
+          onChangeText={setAddress}
+        />
+
+        <TextInput
+          style={styles.input}
+          placeholder="Descripción del problema"
+          value={description}
+          onChangeText={setDescription}
+          multiline
+          onBlur={() => Keyboard.dismiss()} // Cierra el teclado al salir del campo
+        />
+        
+        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+          <Text style={styles.buttonText}>Aceptar</Text>
+        </TouchableOpacity>
       </View>
-
-      <TextInput
-        style={styles.input}
-        placeholder="Dirección"
-        value={address}
-        onChangeText={setAddress}
-      />
-
-      <TextInput
-        style={styles.input}
-        placeholder="Descripción del problema"
-        value={description}
-        onChangeText={setDescription}
-        multiline
-      />
-      
-      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-        <Text style={styles.buttonText}>Aceptar</Text>
-      </TouchableOpacity>
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -147,14 +158,14 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
   },
   selectedTimeOption: {
-    backgroundColor: '#4FC3F7', // Resalta la opción seleccionada con un fondo azul claro
-    borderColor: '#333', // Cambia el borde para la opción seleccionada
+    backgroundColor: '#4FC3F7',
+    borderColor: '#333',
   },
   timeText: {
     color: '#3E3E3E',
   },
   selectedTimeText: {
-    color: '#fff', // Cambia el color del texto cuando está seleccionado
+    color: '#fff',
   },
   input: {
     width: '100%',

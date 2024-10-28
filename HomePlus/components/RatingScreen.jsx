@@ -1,6 +1,15 @@
 // screens/RatingScreen.js
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, TextInput, Image } from 'react-native';
+import { 
+  View, 
+  Text, 
+  TouchableOpacity, 
+  StyleSheet, 
+  TextInput, 
+  Image, 
+  Keyboard, 
+  TouchableWithoutFeedback 
+} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 const RatingScreen = () => {
@@ -13,34 +22,36 @@ const RatingScreen = () => {
   };
 
   const handleSubmit = () => {
-    // Aquí puedes agregar la lógica para enviar la calificación y comentarios
     alert(`Calificación: ${rating} estrellas\nComentario: ${comment}`);
-    navigation.navigate('Services'); // Navegar de regreso a la pantalla de servicios o donde sea necesario
+    navigation.navigate('Services'); 
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Califica tu servicio</Text>
-      {/* <Image source={require('../assets/user.png')} style={styles.userIcon} /> */}
-      <Text style={styles.userName}>Juan Pérez</Text>
-      <View style={styles.ratingContainer}>
-        {[1, 2, 3, 4, 5].map((star) => (
-          <TouchableOpacity key={star} onPress={() => handleRating(star)}>
-            <Text style={styles.star}>{star <= rating ? '★' : '☆'}</Text>
-          </TouchableOpacity>
-        ))}
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Califica tu servicio</Text>
+        {/* <Image source={require('../assets/user.png')} style={styles.userIcon} /> */}
+        <Text style={styles.userName}>Juan Pérez</Text>
+        <View style={styles.ratingContainer}>
+          {[1, 2, 3, 4, 5].map((star) => (
+            <TouchableOpacity key={star} onPress={() => handleRating(star)}>
+              <Text style={styles.star}>{star <= rating ? '★' : '☆'}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+        <TextInput
+          style={styles.input}
+          placeholder="COMENTARIOS:"
+          value={comment}
+          onChangeText={setComment}
+          multiline
+          onBlur={() => Keyboard.dismiss()} // Cierra el teclado al salir del campo
+        />
+        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+          <Text style={styles.buttonText}>Finalizar</Text>
+        </TouchableOpacity>
       </View>
-      <TextInput
-        style={styles.input}
-        placeholder="COMENTARIOS:"
-        value={comment}
-        onChangeText={setComment}
-        multiline
-      />
-      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-        <Text style={styles.buttonText}>Finalizar</Text>
-      </TouchableOpacity>
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 

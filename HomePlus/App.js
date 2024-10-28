@@ -17,6 +17,7 @@ import PaymentMethodsScreen from './components/PaymentMethodsScreen';
 import ServiceHistoryScreen from './components/ServiceHistoryScreen';
 import HelpScreen from './components/HelpScreen';
 import MoreHelpScreen from './components/MoreHelpScreen';
+import TermsAndConditionsScreen from './components/TermsAndConditionsScreen';
 
 const Stack = createStackNavigator();
 
@@ -40,6 +41,7 @@ const App = () => {
             <Stack.Screen name="ServiceHistory" component={ServiceHistoryScreen} />
             <Stack.Screen name="Help" component={HelpScreen} />
             <Stack.Screen name="MoreHelp" component={MoreHelpScreen} />
+            <Stack.Screen name="TermsConditions" component={TermsAndConditionsScreen} />
           </Stack.Navigator>
         </View>
       </NavigationContainer>
