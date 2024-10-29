@@ -1,7 +1,15 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons'; // Importamos los íconos
+import { 
+  View, 
+  Text, 
+  TouchableOpacity, 
+  StyleSheet, 
+  Dimensions 
+} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons'; 
 import { useNavigation } from '@react-navigation/native';
+
+const { width } = Dimensions.get('window');
 
 const MoreHelpScreen = () => {
   const navigation = useNavigation();
@@ -9,27 +17,27 @@ const MoreHelpScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>¿Necesitas más ayuda?</Text>
-      <Text style={styles.subtitle}>Si necesitas ayuda, comunícate con nosotros por alguno de los siguientes medios</Text>
+      <Text style={styles.subtitle}>
+        Si necesitas ayuda, comunícate con nosotros por alguno de los siguientes medios.
+      </Text>
 
-      {/* Opciones de contacto */}
       <View style={styles.contactContainer}>
         <TouchableOpacity style={styles.contactButton}>
+          <Icon name="call-outline" size={30} color="#000" />
           <Text style={styles.contactText}>Teléfono</Text>
-          <Icon name="call-outline" size={40} color="#000" style={styles.icon} />
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.contactButton}>
+          <Icon name="logo-whatsapp" size={30} color="#25D366" />
           <Text style={styles.contactText}>Whatsapp</Text>
-          <Icon name="logo-whatsapp" size={40} color="#25D366" style={styles.icon} />
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.contactButton}>
+          <Icon name="mail-outline" size={30} color="#000" />
           <Text style={styles.contactText}>Email</Text>
-          <Icon name="mail-outline" size={40} color="#000" style={styles.icon} />
         </TouchableOpacity>
       </View>
 
-      {/* Botón para regresar */}
       <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
         <Text style={styles.backButtonText}>Regresar</Text>
       </TouchableOpacity>
@@ -42,12 +50,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F8F8F8',
     padding: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
     color: '#3E3E3E',
     marginBottom: 10,
+    textAlign: 'center',
   },
   subtitle: {
     fontSize: 16,
@@ -56,37 +67,35 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   contactContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: '100%',
+    marginBottom: 30,
   },
   contactButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 20,
-    padding: 10,
-    width: '80%',
+    justifyContent: 'flex-start',
     backgroundColor: '#E0F7FA',
+    padding: 15,
     borderRadius: 10,
-    elevation: 2, // Sombra leve para dar profundidad
+    marginBottom: 15,
+    width: '80%',
+    elevation: 3, // Sombra leve para dar profundidad
   },
   contactText: {
     fontSize: 18,
     color: '#3E3E3E',
-  },
-  icon: {
     marginLeft: 20,
   },
   backButton: {
-    backgroundColor: '#81D4FA',
-    padding: 10,
-    borderRadius: 5,
+    backgroundColor: '#4CAF50',
+    padding: 15,
+    borderRadius: 10,
+    width: width * 0.6,
     alignItems: 'center',
-    marginTop: 20,
   },
   backButtonText: {
-    fontSize: 16,
+    fontSize: 18,
+    fontWeight: 'bold',
     color: '#fff',
   },
 });

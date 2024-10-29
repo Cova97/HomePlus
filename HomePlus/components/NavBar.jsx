@@ -1,8 +1,18 @@
 import React, { useState, useRef } from 'react';
-import { View, Text, TouchableOpacity, Animated, StyleSheet, ScrollView, SafeAreaView, Dimensions } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Animated,
+  StyleSheet,
+  ScrollView,
+  SafeAreaView,
+  Dimensions,
+} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons'; // Importamos los íconos
 import { useNavigation } from '@react-navigation/native';
 
-const { height } = Dimensions.get('window');
+const { height, width } = Dimensions.get('window'); 
 
 const NavBar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -27,35 +37,79 @@ const NavBar = () => {
   return (
     <SafeAreaView style={styles.container}>
       <TouchableOpacity onPress={toggleMenu} style={styles.menuButton}>
-        <Text style={styles.menuText}>☰</Text>
+        <Icon name="menu-outline" size={30} color="#3E3E3E" />
       </TouchableOpacity>
 
-      <Animated.View 
+      <Animated.View
         style={[
-          styles.menuContainer, 
-          { transform: [{ translateY }] }
+          styles.menuContainer,
+          { transform: [{ translateY }] },
         ]}
       >
-        <ScrollView>
-          <TouchableOpacity style={styles.menuItem} onPress={() => { navigation.navigate('UserInfo'); toggleMenu(); }}>
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          <TouchableOpacity
+            style={styles.menuItem}
+            onPress={() => {
+              navigation.navigate('UserInfo');
+              toggleMenu();
+            }}
+          >
+            <Icon name="person-outline" size={24} color="#3E3E3E" style={styles.icon} />
             <Text style={styles.menuItemText}>Mi cuenta</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} onPress={() => { navigation.navigate('PaymentMethods'); toggleMenu(); }}>
+
+          <TouchableOpacity
+            style={styles.menuItem}
+            onPress={() => {
+              navigation.navigate('PaymentMethods');
+              toggleMenu();
+            }}
+          >
+            <Icon name="card-outline" size={24} color="#3E3E3E" style={styles.icon} />
             <Text style={styles.menuItemText}>Métodos de pago</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} onPress={() => { navigation.navigate('ServiceHistory'); toggleMenu(); }}>
+
+          <TouchableOpacity
+            style={styles.menuItem}
+            onPress={() => {
+              navigation.navigate('ServiceHistory');
+              toggleMenu();
+            }}
+          >
+            <Icon name="list-outline" size={24} color="#3E3E3E" style={styles.icon} />
             <Text style={styles.menuItemText}>Historial de servicios</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} onPress={() => { navigation.navigate('TermsConditions'); toggleMenu(); }}>
+
+          <TouchableOpacity
+            style={styles.menuItem}
+            onPress={() => {
+              navigation.navigate('TermsConditions');
+              toggleMenu();
+            }}
+          >
+            <Icon name="document-text-outline" size={24} color="#3E3E3E" style={styles.icon} />
             <Text style={styles.menuItemText}>Términos y Condiciones</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} onPress={() => { navigation.navigate('Help'); toggleMenu(); }}>
+
+          <TouchableOpacity
+            style={styles.menuItem}
+            onPress={() => {
+              navigation.navigate('Help');
+              toggleMenu();
+            }}
+          >
+            <Icon name="help-circle-outline" size={24} color="#3E3E3E" style={styles.icon} />
             <Text style={styles.menuItemText}>Ayuda</Text>
           </TouchableOpacity>
-          <TouchableOpacity 
-            style={[styles.menuItem, styles.logoutButton]} 
-            onPress={() => { navigation.navigate('Login'); toggleMenu(); }}
+
+          <TouchableOpacity
+            style={[styles.menuItem, styles.logoutButton]}
+            onPress={() => {
+              navigation.navigate('Login');
+              toggleMenu();
+            }}
           >
+            <Icon name="log-out-outline" size={24} color="#fff" style={styles.icon} />
             <Text style={styles.logoutButtonText}>Cerrar sesión</Text>
           </TouchableOpacity>
         </ScrollView>
@@ -73,9 +127,8 @@ const styles = StyleSheet.create({
     zIndex: 1000,
   },
   menuButton: {
-    position: 'absolute',
-    top: 10,
-    left: 10,
+    marginTop: 40,
+    marginLeft: 10,
     backgroundColor: '#fff',
     padding: 10,
     borderRadius: 8,
@@ -85,30 +138,35 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 4,
   },
-  menuText: {
-    fontSize: 18,
-    color: '#3E3E3E',
-  },
   menuContainer: {
     position: 'absolute',
-    top: 0,
+    top: 100,
     left: 0,
     right: 0,
-    height: height,
+    height: height - 100,
     backgroundColor: '#fff',
     borderBottomRightRadius: 15,
     borderBottomLeftRadius: 15,
     overflow: 'hidden',
     elevation: 5,
   },
+  scrollContainer: {
+    paddingTop: 70,
+    paddingBottom: 20,
+  },
   menuItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
     paddingVertical: 15,
     paddingHorizontal: 20,
     borderBottomWidth: 1,
     borderBottomColor: '#f0f0f0',
   },
+  icon: {
+    marginRight: 15,
+  },
   menuItemText: {
-    fontSize: 16,
+    fontSize: 18,
     color: '#3E3E3E',
   },
   logoutButton: {
@@ -117,11 +175,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     borderRadius: 5,
     alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
   logoutButtonText: {
-    fontSize: 16,
+    fontSize: 18,
     color: '#fff',
     fontWeight: 'bold',
+    marginLeft: 10,
   },
 });
 

@@ -1,7 +1,16 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons'; // Importamos los íconos
+import { 
+  View, 
+  Text, 
+  TouchableOpacity, 
+  StyleSheet, 
+  ScrollView, 
+  Dimensions 
+} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
+
+const { width } = Dimensions.get('window');
 
 const faqs = [
   '¿Cómo cancelo un servicio?',
@@ -18,24 +27,20 @@ const HelpScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Preguntas frecuentes</Text>
-      
-      {/* Mapeamos y mostramos las preguntas frecuentes */}
-      <View style={styles.faqContainer}>
+      <Text style={styles.title}>Preguntas Frecuentes</Text>
+
+      <ScrollView contentContainerStyle={styles.faqContainer}>
         {faqs.map((faq, index) => (
           <View key={index} style={styles.faqItem}>
-            <Icon name="ellipse-outline" size={20} color="#3E3E3E" style={styles.icon} />
+            <Icon name="help-circle-outline" size={24} color="#3E3E3E" style={styles.icon} />
             <Text style={styles.faqText}>{faq}</Text>
           </View>
         ))}
-      </View>
+      </ScrollView>
 
-      {/* Botón de más ayuda */}
-      
-        <TouchableOpacity style={styles.helpButton} onPress={() => navigation.navigate('MoreHelp')}>
-            <Text style={styles.helpButtonText}>¿Necesitas más ayuda?</Text>
-        </TouchableOpacity>
-
+      <TouchableOpacity style={styles.helpButton} onPress={() => navigation.navigate('MoreHelp')}>
+        <Text style={styles.helpButtonText}>¿Necesitas más ayuda?</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -45,37 +50,46 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F8F8F8',
     padding: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
     marginBottom: 20,
     color: '#3E3E3E',
+    textAlign: 'center',
   },
   faqContainer: {
-    flex: 1,
+    width: '100%',
+    paddingBottom: 20,
   },
   faqItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 15,
+    backgroundColor: '#E3F2FD',
+    padding: 15,
+    borderRadius: 8,
+    marginBottom: 10,
   },
   icon: {
-    marginRight: 10,
+    marginRight: 15,
   },
   faqText: {
-    fontSize: 16,
+    fontSize: 18,
     color: '#3E3E3E',
   },
   helpButton: {
-    backgroundColor: '#81D4FA',
-    padding: 10,
-    borderRadius: 5,
+    backgroundColor: '#4CAF50',
+    padding: 15,
+    borderRadius: 10,
+    width: '80%',
     alignItems: 'center',
     marginTop: 20,
   },
   helpButtonText: {
-    fontSize: 16,
+    fontSize: 18,
+    fontWeight: 'bold',
     color: '#fff',
   },
 });

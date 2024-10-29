@@ -1,7 +1,16 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons'; // Importamos los íconos
+import { 
+  View, 
+  Text, 
+  TouchableOpacity, 
+  StyleSheet, 
+  ScrollView, 
+  Dimensions 
+} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
+
+const { width } = Dimensions.get('window');
 
 const servicesHistory = [
   { name: 'Servicio de plomería', date: '12/10/22', icon: 'water-outline', status: 'Completado' },
@@ -14,10 +23,9 @@ const ServiceHistoryScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Actividad reciente</Text>
-      
-      {/* Mapeamos y mostramos el historial de servicios */}
-      <View style={styles.historyContainer}>
+      <Text style={styles.title}>Actividad Reciente</Text>
+
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
         {servicesHistory.map((service, index) => (
           <View key={index} style={styles.serviceItem}>
             <Icon name={service.icon} size={40} color="#3E3E3E" style={styles.icon} />
@@ -28,12 +36,7 @@ const ServiceHistoryScreen = () => {
             </View>
           </View>
         ))}
-      </View>
-
-      {/* Botón para regresar */}
-      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-        <Text style={styles.backButtonText}>Regresar</Text>
-      </TouchableOpacity>
+      </ScrollView>
     </View>
   );
 };
@@ -42,21 +45,26 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F8F8F8',
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingTop: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
     marginBottom: 20,
     color: '#3E3E3E',
   },
-  historyContainer: {
-    flex: 1,
+  scrollContainer: {
+    flexGrow: 1,
+    paddingBottom: 20,
   },
   serviceItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
+    backgroundColor: '#E3F2FD',
+    borderRadius: 8,
+    padding: 15,
+    marginBottom: 15,
   },
   icon: {
     marginRight: 20,
@@ -65,27 +73,33 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   serviceName: {
-    fontSize: 18,
+    fontSize: 20,
+    fontWeight: 'bold',
     color: '#3E3E3E',
   },
   serviceStatus: {
-    fontSize: 14,
-    color: '#757575',
+    fontSize: 16,
+    color: '#4CAF50',
+    marginTop: 5,
   },
   serviceDate: {
     fontSize: 14,
     color: '#757575',
+    marginTop: 2,
   },
   backButton: {
     backgroundColor: '#81D4FA',
-    padding: 10,
-    borderRadius: 5,
+    padding: 15,
+    borderRadius: 8,
     alignItems: 'center',
     marginTop: 20,
+    width: '80%',
+    alignSelf: 'center',
   },
   backButtonText: {
-    fontSize: 16,
+    fontSize: 18,
     color: '#fff',
+    fontWeight: 'bold',
   },
 });
 

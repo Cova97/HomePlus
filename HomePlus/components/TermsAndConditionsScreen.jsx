@@ -1,13 +1,15 @@
-// screens/TermsAndConditionsScreen.jsx
 import React from 'react';
 import { 
   View, 
   Text, 
   TouchableOpacity, 
   StyleSheet, 
-  ScrollView 
+  ScrollView, 
+  Dimensions 
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+
+const { width } = Dimensions.get('window');
 
 const TermsAndConditionsScreen = () => {
   const navigation = useNavigation();
@@ -18,34 +20,31 @@ const TermsAndConditionsScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Política de privacidad</Text>
-      <ScrollView style={styles.content}>
+      <Text style={styles.title}>Política de Privacidad</Text>
+      <ScrollView contentContainerStyle={styles.content}>
         <Text style={styles.text}>
           HOME+ es el responsable del tratamiento de los datos personales que nos proporcione. {"\n\n"}
           Los datos personales recabados serán utilizados para las siguientes finalidades: 
           {"\n\n"}
-          La finalidad de tener sus datos consiste en tener una base de datos para promociones y 
-          encuestas que nos ayuden a llevar un control de calidad para brindar un servicio de excelencia.
+          La finalidad de tener sus datos consiste en mantener una base de datos para promociones y 
+          encuestas que nos ayuden a brindar un servicio de excelencia.
           {"\n\n"}
-          Usted tiene derecho a:
+          **Usted tiene derecho a:**
           {"\n"}- Rectificar sus datos personales en caso de error.
           {"\n"}- Solicitar la cancelación de sus datos personales.
-          {"\n"}- Oponerse al tratamiento de sus datos personales por daños o perjuicios a sus intereses.
+          {"\n"}- Oponerse al tratamiento de sus datos personales si esto afecta sus intereses.
           {"\n\n"}
-          Los datos que se solicitan son los siguientes:
+          **Los datos que se solicitan son los siguientes:**
           {"\n"}- Nombre
           {"\n"}- Número de teléfono
           {"\n"}- Domicilio
           {"\n"}- Correo electrónico
           {"\n"}- Datos bancarios
           {"\n\n"}
-          Sus datos personales serán compartidos únicamente con Home+ para cumplir con las finalidades 
-          mencionadas. Usted podrá consultar el aviso de privacidad integral en nuestra página web.
+          Sus datos personales serán compartidos únicamente con HOME+ para cumplir con las finalidades 
+          mencionadas. Puede consultar el aviso de privacidad integral en nuestra página web.
         </Text>
       </ScrollView>
-      <TouchableOpacity style={styles.button} onPress={handleAccept}>
-        <Text style={styles.buttonText}>Aceptar</Text>
-      </TouchableOpacity>
     </View>
   );
 };
@@ -56,20 +55,25 @@ const styles = StyleSheet.create({
     backgroundColor: '#B3E5FC',
     padding: 20,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 15,
     color: '#3E3E3E',
     borderBottomWidth: 2,
     borderColor: '#6200EE',
     paddingBottom: 5,
+    textAlign: 'center',
   },
   content: {
-    flex: 1,
+    flexGrow: 1,
     width: '100%',
-    marginVertical: 10,
+    padding: 10,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    marginBottom: 15,
   },
   text: {
     fontSize: 16,
@@ -77,16 +81,17 @@ const styles = StyleSheet.create({
     lineHeight: 24,
   },
   button: {
-    backgroundColor: '#fff',
+    backgroundColor: '#4CAF50',
     padding: 15,
-    borderRadius: 25,
-    width: '50%',
+    borderRadius: 30,
+    width: width * 0.5,
     alignItems: 'center',
     marginTop: 10,
   },
   buttonText: {
-    color: '#3E3E3E',
-    fontSize: 16,
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
 

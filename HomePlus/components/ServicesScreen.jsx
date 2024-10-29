@@ -1,8 +1,19 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  SafeAreaView,
+  ScrollView,
+  Dimensions,
+  Image,
+} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import NavBar from './NavBar';
+
+const { width, height } = Dimensions.get('window'); // Obtiene ancho y alto de la pantalla
 
 const services = [
   { name: 'Plomero', icon: 'water-outline' },
@@ -32,23 +43,40 @@ const ServicesScreen = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <NavBar />
-      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+      <ScrollView
+        contentContainerStyle={styles.scrollViewContent}
+        keyboardShouldPersistTaps="handled"
+      >
+        {/* Logo */}
+        <Image 
+          source={require('../assets/logo.jpeg')} 
+          style={styles.logo} 
+          resizeMode="contain" 
+        />
+
         <View style={styles.container}>
           <Text style={styles.title}>¿Qué servicio necesitas?</Text>
           <View style={styles.servicesContainer}>
             {services.map((service, index) => (
-              <TouchableOpacity 
-                key={index} 
+              <TouchableOpacity
+                key={index}
                 style={[
-                  styles.serviceItem, 
-                  selectedService === service && styles.selectedServiceItem
-                ]} 
-                onPress={() => handleServiceSelection(service)}>
-                <Icon name={service.icon} size={30} color={selectedService === service ? '#fff' : '#3E3E3E'} />
-                <Text style={[
-                  styles.serviceName, 
-                  selectedService === service && styles.selectedServiceName
-                ]}>
+                  styles.serviceItem,
+                  selectedService === service && styles.selectedServiceItem,
+                ]}
+                onPress={() => handleServiceSelection(service)}
+              >
+                <Icon
+                  name={service.icon}
+                  size={30}
+                  color={selectedService === service ? '#fff' : '#3E3E3E'}
+                />
+                <Text
+                  style={[
+                    styles.serviceName,
+                    selectedService === service && styles.selectedServiceName,
+                  ]}
+                >
                   {service.name}
                 </Text>
               </TouchableOpacity>
@@ -70,25 +98,34 @@ const styles = StyleSheet.create({
   },
   scrollViewContent: {
     flexGrow: 1,
-    paddingTop: 60, // Adjust this value based on your NavBar height
+    paddingTop: 60,
+    paddingHorizontal: 20,
+  },
+  logo: {
+    width: 150,
+    height: 150,
+    alignSelf: 'center',
+    marginBottom: 50,
+    top: 30,
   },
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
     marginBottom: 20,
     color: '#3E3E3E',
+    textAlign: 'center',
   },
   servicesContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-around',
     width: '100%',
+    marginBottom: 20,
   },
   serviceItem: {
     alignItems: 'center',
@@ -97,7 +134,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 10,
     elevation: 3,
-    width: '40%',
+    width: width * 0.3,
   },
   selectedServiceItem: {
     backgroundColor: '#81D4FA',

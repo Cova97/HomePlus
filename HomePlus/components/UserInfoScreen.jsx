@@ -1,83 +1,135 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons'; // Importamos los íconos
+import { 
+  View, 
+  Text, 
+  TextInput, 
+  TouchableOpacity, 
+  StyleSheet, 
+  KeyboardAvoidingView, 
+  ScrollView, 
+  Platform, 
+  Keyboard, 
+  TouchableWithoutFeedback, 
+  Dimensions 
+} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+
+const { width } = Dimensions.get('window');
 
 const UserInfoScreen = () => {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handlePasswordChange = () => {
-    // Lógica para cambiar la contraseña
+    alert('Contraseña cambiada con éxito.');
   };
 
   const handleSaveChanges = () => {
-    // Lógica para guardar los cambios
+    alert('Cambios guardados exitosamente.');
   };
 
   return (
-    <View style={styles.container}>
-      {/* Información del usuario con íconos */}
-      <View style={styles.infoContainer}>
-        <View style={styles.infoRow}>
-          <Icon name="person-outline" size={20} color="#3E3E3E" style={styles.icon} />
-          <Text style={styles.label}>Nombre:</Text>
-          <Text style={styles.infoText}>Pedro</Text>
-        </View>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      style={styles.keyboardAvoidingView}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          <View style={styles.container}>
+            <View style={styles.infoContainer}>
+              <View style={styles.infoRow}>
+                <Icon name="person-outline" size={24} color="#3E3E3E" style={styles.icon} />
+                <Text style={styles.label}>Nombre:</Text>
+                <Text style={styles.infoText}>Pedro</Text>
+              </View>
 
-        <View style={styles.infoRow}>
-          <Icon name="person-outline" size={20} color="#3E3E3E" style={styles.icon} />
-          <Text style={styles.label}>Apellido:</Text>
-          <Text style={styles.infoText}>Suárez</Text>
-        </View>
+              <View style={styles.infoRow}>
+                <Icon name="person-outline" size={24} color="#3E3E3E" style={styles.icon} />
+                <Text style={styles.label}>Apellido:</Text>
+                <Text style={styles.infoText}>Suárez</Text>
+              </View>
 
-        <View style={styles.infoRow}>
-          <Icon name="mail-outline" size={20} color="#3E3E3E" style={styles.icon} />
-          <Text style={styles.label}>Correo electrónico:</Text>
-          <Text style={styles.infoText}>Pedro.suarez14@gmail.com</Text>
-        </View>
-      </View>
+              <View style={styles.infoRow}>
+                <Icon name="mail-outline" size={24} color="#3E3E3E" style={styles.icon} />
+                <Text style={styles.label}>Correo:</Text>
+                <Text style={styles.infoText}>Pedro.suarez14@gmail.com</Text>
+              </View>
+            </View>
 
-      {/* Campo para nueva contraseña */}
-      <TextInput
-        style={styles.input}
-        placeholder="Nueva Contraseña"
-        secureTextEntry
-        value={newPassword}
-        onChangeText={setNewPassword}
-      />
+            {/* Nueva Contraseña */}
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.input}
+                placeholder="Nueva Contraseña"
+                secureTextEntry={!showNewPassword}
+                value={newPassword}
+                onChangeText={setNewPassword}
+              />
+              <TouchableOpacity onPress={() => setShowNewPassword(!showNewPassword)}>
+                <Icon 
+                  name={showNewPassword ? 'eye-off-outline' : 'eye-outline'} 
+                  size={24} 
+                  color="#3E3E3E" 
+                />
+              </TouchableOpacity>
+            </View>
 
-      {/* Campo para confirmar contraseña */}
-      <TextInput
-        style={styles.input}
-        placeholder="Confirmar contraseña"
-        secureTextEntry
-        value={confirmPassword}
-        onChangeText={setConfirmPassword}
-      />
+            {/* Confirmar Contraseña */}
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.input}
+                placeholder="Confirmar Contraseña"
+                secureTextEntry={!showConfirmPassword}
+                value={confirmPassword}
+                onChangeText={setConfirmPassword}
+              />
+              <TouchableOpacity onPress={() => setShowConfirmPassword(!showConfirmPassword)}>
+                <Icon 
+                  name={showConfirmPassword ? 'eye-off-outline' : 'eye-outline'} 
+                  size={24} 
+                  color="#3E3E3E" 
+                />
+              </TouchableOpacity>
+            </View>
 
-      {/* Botón para cambiar la contraseña con ícono */}
-      <TouchableOpacity style={styles.button} onPress={handlePasswordChange}>
-        <Icon name="lock-closed-outline" size={20} color="#fff" style={styles.buttonIcon} />
-        <Text style={styles.buttonText}>Cambiar de contraseña</Text>
-      </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={handlePasswordChange}>
+              <Icon name="lock-closed-outline" size={20} color="#fff" style={styles.buttonIcon} />
+              <Text style={styles.buttonText}>Cambiar de Contraseña</Text>
+            </TouchableOpacity>
 
-      {/* Botón para guardar cambios con ícono */}
-      <TouchableOpacity style={styles.saveButton} onPress={handleSaveChanges}>
-        <Icon name="save-outline" size={20} color="#fff" style={styles.buttonIcon} />
-        <Text style={styles.saveButtonText}>Guardar cambios</Text>
-      </TouchableOpacity>
-    </View>
+            <TouchableOpacity style={styles.saveButton} onPress={handleSaveChanges}>
+              <Icon name="save-outline" size={20} color="#fff" style={styles.buttonIcon} />
+              <Text style={styles.saveButtonText}>Guardar Cambios</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  keyboardAvoidingView: {
     flex: 1,
+    backgroundColor: '#E3F2FD',
+  },
+  scrollContainer: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 20,
+  },
+  container: {
+    width: '100%',
+    maxWidth: width * 0.9,
+    alignItems: 'center',
     padding: 20,
-    backgroundColor: '#fff', // Fondo blanco
   },
   infoContainer: {
     marginBottom: 20,
+    width: '100%',
   },
   infoRow: {
     flexDirection: 'row',
@@ -97,23 +149,29 @@ const styles = StyleSheet.create({
     color: '#3E3E3E',
     fontWeight: 'bold',
   },
-  input: {
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fff',
     borderWidth: 1,
     borderColor: '#3E3E3E',
-    backgroundColor: '#E3F2FD', // Azul claro para los campos de contraseña
-    borderRadius: 8,
-    padding: 10,
+    borderRadius: 10,
+    paddingHorizontal: 10,
     marginBottom: 15,
-    color: '#3E3E3E',
+  },
+  input: {
+    flex: 1,
+    padding: 15,
   },
   button: {
     flexDirection: 'row',
-    backgroundColor: '#90CAF9', // Azul claro para el botón
+    backgroundColor: '#42A5F5',
     padding: 15,
-    borderRadius: 8,
+    borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 20,
+    width: '80%',
   },
   buttonIcon: {
     marginRight: 10,
@@ -125,11 +183,12 @@ const styles = StyleSheet.create({
   },
   saveButton: {
     flexDirection: 'row',
-    backgroundColor: '#90CAF9',
+    backgroundColor: '#1E88E5',
     padding: 15,
-    borderRadius: 8,
+    borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
+    width: '80%',
   },
   saveButtonText: {
     color: '#fff',

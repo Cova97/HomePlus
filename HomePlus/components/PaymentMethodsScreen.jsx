@@ -1,6 +1,21 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons'; // Importamos los íconos
+import { 
+  View, 
+  Text, 
+  TextInput, 
+  TouchableOpacity, 
+  StyleSheet, 
+  FlatList, 
+  KeyboardAvoidingView, 
+  ScrollView, 
+  Platform, 
+  Dimensions, 
+  Keyboard, 
+  TouchableWithoutFeedback 
+} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+
+const { width } = Dimensions.get('window');
 
 const PaymentMethodsScreen = () => {
   const [cardNumber, setCardNumber] = useState('');
@@ -9,102 +24,123 @@ const PaymentMethodsScreen = () => {
   const [country, setCountry] = useState('');
   const [paymentMethods, setPaymentMethods] = useState([
     { id: '1', number: '****2567' },
-    { id: '2', number: '****8679' }
+    { id: '2', number: '****8679' },
   ]);
 
   const handleAddPaymentMethod = () => {
-    // Lógica para agregar un método de pago
+    if (cardNumber && expiry && cvv && country) {
+      const newMethod = { id: Date.now().toString(), number: `****${cardNumber.slice(-4)}` };
+      setPaymentMethods([...paymentMethods, newMethod]);
+      setCardNumber('');
+      setExpiry('');
+      setCvv('');
+      setCountry('');
+    } else {
+      alert('Por favor, complete toda la información.');
+    }
   };
 
   return (
-    <View style={styles.container}>
-      {/* Título y descripción */}
-      <View style={styles.header}>
-        <Icon name="card-outline" size={24} color="#3E3E3E" />
-        <Text style={styles.title}>Métodos de pago</Text>
-      </View>
-      <Text style={styles.subtitle}>
-        Aquí puedes encontrar tus métodos de pago. Puedes crear, borrar o cambiarlos.
-      </Text>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      style={styles.keyboardAvoidingView}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          <View style={styles.container}>
+            <View style={styles.header}>
+              <Icon name="card-outline" size={24} color="#3E3E3E" />
+              <Text style={styles.title}>Métodos de Pago</Text>
+            </View>
 
-      {/* Métodos de pago existentes */}
-      <Text style={styles.sectionTitle}>Métodos de pago</Text>
-      <FlatList
-        data={paymentMethods}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.paymentMethod}>
-            <Icon name="card-outline" size={24} color="#3E3E3E" />
-            <Text style={styles.paymentText}>{item.number}</Text>
-          </View>
-        )}
-      />
+            <Text style={styles.subtitle}>
+              Aquí puedes encontrar tus métodos de pago. Puedes crear, borrar o cambiarlos.
+            </Text>
 
-      {/* Formulario para agregar un nuevo método de pago */}
-      <Text style={styles.sectionTitle}>Agrega la información de pago</Text>
-      <View style={styles.form}>
-        <Text style={styles.formTitle}>Información de la tarjeta</Text>
-
-        {/* Campo de número de tarjeta */}
-        <View style={styles.inputContainer}>
-          <Icon name="card-outline" size={24} color="#fff" style={styles.inputIcon} />
-          <TextInput
-            style={styles.input}
-            placeholder="Número de tarjeta"
-            value={cardNumber}
-            onChangeText={setCardNumber}
-          />
-        </View>
-
-        {/* Campos de fecha de expiración y CVV */}
-        <View style={styles.row}>
-          <View style={styles.inputContainerSmall}>
-            <Icon name="calendar-outline" size={20} color="#fff" style={styles.inputIcon} />
-            <TextInput
-              style={styles.inputSmall}
-              placeholder="MM/AA"
-              value={expiry}
-              onChangeText={setExpiry}
+            <Text style={styles.sectionTitle}>Métodos de Pago</Text>
+            <FlatList
+              data={paymentMethods}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item }) => (
+                <View style={styles.paymentMethod}>
+                  <Icon name="card-outline" size={24} color="#3E3E3E" />
+                  <Text style={styles.paymentText}>{item.number}</Text>
+                </View>
+              )}
             />
+
+            <Text style={styles.sectionTitle}>Agrega la Información de Pago</Text>
+            <View style={styles.form}>
+              <View style={styles.inputContainer}>
+                <Icon name="card-outline" size={24} color="#fff" style={styles.inputIcon} />
+                <TextInput
+                  style={styles.input}
+                  placeholder="Número de Tarjeta"
+                  value={cardNumber}
+                  onChangeText={setCardNumber}
+                  keyboardType="numeric"
+                />
+              </View>
+
+              <View style={styles.row}>
+                <View style={styles.inputContainerSmall}>
+                  <Icon name="calendar-outline" size={20} color="#fff" style={styles.inputIcon} />
+                  <TextInput
+                    style={styles.inputSmall}
+                    placeholder="MM/AA"
+                    value={expiry}
+                    onChangeText={setExpiry}
+                  />
+                </View>
+
+                <View style={styles.inputContainerSmall}>
+                  <Icon name="lock-closed-outline" size={20} color="#fff" style={styles.inputIcon} />
+                  <TextInput
+                    style={styles.inputSmall}
+                    placeholder="CVV"
+                    value={cvv}
+                    onChangeText={setCvv}
+                    secureTextEntry
+                    keyboardType="numeric"
+                  />
+                </View>
+              </View>
+
+              <View style={styles.inputContainer}>
+                <Icon name="earth-outline" size={24} color="#fff" style={styles.inputIcon} />
+                <TextInput
+                  style={styles.input}
+                  placeholder="País o Región"
+                  value={country}
+                  onChangeText={setCountry}
+                />
+              </View>
+
+              <TouchableOpacity style={styles.addButton} onPress={handleAddPaymentMethod}>
+                <Text style={styles.addButtonText}>Agregar Método de Pago</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-
-          <View style={styles.inputContainerSmall}>
-            <Icon name="lock-closed-outline" size={20} color="#fff" style={styles.inputIcon} />
-            <TextInput
-              style={styles.inputSmall}
-              placeholder="CVV"
-              value={cvv}
-              onChangeText={setCvv}
-              secureTextEntry
-            />
-          </View>
-        </View>
-
-        {/* Campo de país o región */}
-        <View style={styles.inputContainer}>
-          <Icon name="earth-outline" size={24} color="#fff" style={styles.inputIcon} />
-          <TextInput
-            style={styles.input}
-            placeholder="País o región"
-            value={country}
-            onChangeText={setCountry}
-          />
-        </View>
-
-        {/* Botón para agregar método de pago */}
-        <TouchableOpacity style={styles.addButton} onPress={handleAddPaymentMethod}>
-          <Text style={styles.addButtonText}>Agregar método de pago</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+        </ScrollView>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  keyboardAvoidingView: {
     flex: 1,
+    backgroundColor: '#E3F2FD',
+  },
+  scrollContainer: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     padding: 20,
-    backgroundColor: '#fff',
+  },
+  container: {
+    width: '100%',
+    maxWidth: width * 0.9,
   },
   header: {
     flexDirection: 'row',
@@ -145,11 +181,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 20,
   },
-  formTitle: {
-    fontSize: 16,
-    color: '#fff',
-    marginBottom: 10,
-  },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -185,13 +216,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   addButton: {
-    backgroundColor: '#fff',
+    backgroundColor: '#4CAF50',
     padding: 15,
     borderRadius: 8,
     alignItems: 'center',
   },
   addButtonText: {
-    color: '#3E3E3E',
+    color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
   },

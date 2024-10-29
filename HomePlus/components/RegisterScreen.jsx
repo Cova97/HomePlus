@@ -1,8 +1,20 @@
-// screens/RegisterScreen.js
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Dimensions,
+  Image,
+} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Ionicons } from '@expo/vector-icons'; // Asegúrate de tener instalado expo/vector-icons
+import { Ionicons } from '@expo/vector-icons';
+
+const { height } = Dimensions.get('window'); // Obtiene la altura de la pantalla
 
 const RegisterScreen = () => {
   const navigation = useNavigation();
@@ -18,67 +30,90 @@ const RegisterScreen = () => {
       setError('Las contraseñas no coinciden');
       return;
     }
-
     setError('');
-    // Aquí implementarías la lógica de registro
     navigation.navigate('Services');
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Registro</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Usuario"
-        value={username}
-        onChangeText={setUsername}
-      />
-      <View style={styles.passwordContainer}>
-        <TextInput
-          style={styles.passwordInput}
-          placeholder="Contraseña"
-          secureTextEntry={!showPassword}
-          value={password}
-          onChangeText={setPassword}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      style={styles.container}
+    >
+      <ScrollView
+        contentContainerStyle={styles.scrollContainer}
+        keyboardShouldPersistTaps="handled"
+      >
+        {/* Logo */}
+        <Image 
+          source={require('../assets/logo.jpeg')} 
+          style={styles.logo} 
+          resizeMode="contain" 
         />
-        <TouchableOpacity
-          style={styles.eyeIcon}
-          onPress={() => setShowPassword(!showPassword)}
-        >
-          <Ionicons 
-            name={showPassword ? 'eye-off' : 'eye'} 
-            size={24} 
-            color="#3E3E3E"
-          />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.passwordContainer}>
+
+        {/* Título */}
+        <Text style={styles.title}>Registro</Text>
+
         <TextInput
-          style={styles.passwordInput}
-          placeholder="Confirmar Contraseña"
-          secureTextEntry={!showConfirmPassword}
-          value={confirmPassword}
-          onChangeText={setConfirmPassword}
+          style={styles.input}
+          placeholder="Usuario"
+          value={username}
+          onChangeText={setUsername}
         />
-        <TouchableOpacity
-          style={styles.eyeIcon}
-          onPress={() => setShowConfirmPassword(!showConfirmPassword)}
-        >
-          <Ionicons 
-            name={showConfirmPassword ? 'eye-off' : 'eye'} 
-            size={24} 
-            color="#3E3E3E"
+
+        <View style={styles.passwordContainer}>
+          <TextInput
+            style={styles.passwordInput}
+            placeholder="Contraseña"
+            secureTextEntry={!showPassword}
+            value={password}
+            onChangeText={setPassword}
           />
+          <TouchableOpacity
+            style={styles.eyeIcon}
+            onPress={() => setShowPassword(!showPassword)}
+          >
+            <Ionicons
+              name={showPassword ? 'eye-off' : 'eye'}
+              size={24}
+              color="#3E3E3E"
+            />
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.passwordContainer}>
+          <TextInput
+            style={styles.passwordInput}
+            placeholder="Confirmar Contraseña"
+            secureTextEntry={!showConfirmPassword}
+            value={confirmPassword}
+            onChangeText={setConfirmPassword}
+          />
+          <TouchableOpacity
+            style={styles.eyeIcon}
+            onPress={() => setShowConfirmPassword(!showConfirmPassword)}
+          >
+            <Ionicons
+              name={showConfirmPassword ? 'eye-off' : 'eye'}
+              size={24}
+              color="#3E3E3E"
+            />
+          </TouchableOpacity>
+        </View>
+
+        {error ? <Text style={styles.errorText}>{error}</Text> : null}
+
+        <TouchableOpacity style={styles.button} onPress={handleRegister}>
+          <Text style={styles.buttonText}>Registrarse</Text>
         </TouchableOpacity>
-      </View>
-      {error ? <Text style={styles.errorText}>{error}</Text> : null}
-      <TouchableOpacity style={styles.button} onPress={handleRegister}>
-        <Text style={styles.buttonText}>Registrarse</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-        <Text style={styles.backButtonText}>Volver al Login</Text>
-      </TouchableOpacity>
-    </View>
+
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}
+        >
+          <Text style={styles.backButtonText}>Volver al Login</Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -86,53 +121,66 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#B3E5FC',
+  },
+  scrollContainer: {
+    flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
+    minHeight: height,
+  },
+  logo: {
+    width: 150,
+    height: 150,
+    marginBottom: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
     marginBottom: 40,
     color: '#3E3E3E',
+    textAlign: 'center',
   },
   input: {
     width: '100%',
-    padding: 10,
+    padding: 15,
     marginVertical: 10,
     backgroundColor: '#fff',
-    borderRadius: 5,
+    borderRadius: 10,
     borderWidth: 1,
     borderColor: '#ccc',
+    fontSize: 16,
   },
   passwordContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     width: '100%',
     backgroundColor: '#fff',
-    borderRadius: 5,
+    borderRadius: 10,
     borderWidth: 1,
     borderColor: '#ccc',
     marginVertical: 10,
   },
   passwordInput: {
     flex: 1,
-    padding: 10,
+    padding: 15,
+    fontSize: 16,
   },
   eyeIcon: {
     padding: 10,
   },
   button: {
-    backgroundColor: '#fff',
+    backgroundColor: '#0288D1',
     padding: 15,
-    borderRadius: 5,
+    borderRadius: 10,
     width: '100%',
     alignItems: 'center',
     marginVertical: 10,
   },
   buttonText: {
-    color: '#3E3E3E',
-    fontSize: 16,
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
   errorText: {
     color: 'red',
